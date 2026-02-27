@@ -1,11 +1,11 @@
 function PageStory({ navigate }) {
   const timeline = [
-    { year:"2022", title:"The Breakdown", desc:"Marcus Webb spends his 14th hour debugging Kubernetes. His espresso machine outperforms every server. A thought forms.", icon:"💻" },
-    { year:"2023", title:"The Experiment", desc:"Marcus meets Aria Chen — Google SRE by day, home roaster by night. 6 months. A garage. Every variable logged like an A/B test.", icon:"🧪" },
-    { year:"Early 2024", title:"The Design Sprint", desc:"Sofia Reyes sketches the ByteBrew identity on a coffee-stained napkin mid-meeting. She quits the next day. The napkin becomes the brand.", icon:"✏️" },
-    { year:"April 2024", title:"First Commit", desc:"ByteBrew opens. One machine. Three people. 42 cups on day one. #ByteBrewMorning is coined by a customer who pays with crypto.", icon:"🚀" },
-    { year:"2025", title:"Scaling the Stack", desc:"12 team members. 42 farm partners. A waitlist for the bean subscription. The Raspberry Pi still runs the queue.", icon:"📈" },
-    { year:"Now", title:"Still Brewing", desc:"Every morning, the team pulls a shot before anything else. Not ritual — calibration. Precision never sleeps.", icon:"☕" },
+    { year:"2021", title:"The 2 AM Breakdown", desc:"Arjun Sharma, a senior engineer at a Bengaluru unicorn, spends his 13th hour on an on-call incident. He makes a cup of filter coffee from a steel dabara-tumbler set his mother sent from Coorg. It is the best thing he has tasted all year. Something shifts.", icon:"💻" },
+    { year:"2022", title:"The Coorg Connection", desc:"Arjun drives to a small estate in Madikeri, Coorg — owned by Priya Nair's family for three generations. He brings a refractometer and a laptop. She roasts a small batch on a wood-fired pan. They cup it together and realise the terroir of Indian beans has never been taken seriously. That changes today.", icon:"🧪" },
+    { year:"Early 2023", title:"The Design Session", desc:"Kavya Reddy, a product designer from Hyderabad who's shipping features for a fintech startup, joins a weekend hackathon at Arjun's flat in Indiranagar. She sketches the ByteBrew wordmark on the back of a Swiggy bag between two filter coffees. She messages her manager the next morning: 'I quit.'", icon:"✏️" },
+    { year:"October 2023", title:"First Commit", desc:"ByteBrew opens in a 600 sq. ft. space on 100 Feet Road, Indiranagar. One La Marzocca. A hand-written menu on a chalkboard. 67 cups on day one. A Zomato review calls it 'the most engineering-brained café in India.' They frame it on the wall.", icon:"🚀" },
+    { year:"2024", title:"Scaling the Stack", desc:"Three new estate partnerships — Chikmagalur, Wayanad, and the Nilgiris. A bean subscription waitlist of 1,200 people. The original Raspberry Pi still runs the billing queue. Arjun refuses to replace it.", icon:"📈" },
+    { year:"Now", title:"Still Brewing", desc:"Every morning at 7 AM, before the first customer walks in, the three founders pull one shot each from the house blend. Not for nostalgia — for calibration. The pursuit of a perfect cup, compiled one day at a time.", icon:"☕" },
   ];
   return (
     <div className="page-fade" style={{ minHeight:"100vh",background:"#0a0f0a" }}>
@@ -17,16 +17,16 @@ function PageStory({ navigate }) {
             How ByteBrew<br/><span style={{ color:"#c8902a" }}>Got Compiled</span>
           </h1>
           <p className="fira" style={{ fontSize:13,color:"#9ca3af",lineHeight:1.8 }}>
-            A story about burnout, obsession, bad Kubernetes clusters, and the perfect espresso that changed everything.
+            A story about burnout, Coorg estates, late-night filter coffee, and three people who believed<br/>Indian beans deserved world-class engineering.
           </p>
         </div>
       </div>
       <div style={{ maxWidth:800,margin:"0 auto",padding:"0 24px 32px" }}>
         <blockquote style={{ borderLeft:"4px solid #00FF41",paddingLeft:32,marginBottom:64 }}>
           <p className="playfair" style={{ fontWeight:900,fontStyle:"italic",fontSize:"clamp(20px,2.5vw,28px)",color:"white",lineHeight:1.5,marginBottom:16 }}>
-            "The espresso machine never had a single outage. I can't say the same for anything I ever deployed."
+            "My amma's filter coffee never crashed. Not once. I can't say the same for any system I ever deployed on-call."
           </p>
-          <footer className="fira" style={{ fontSize:11,color:"#6b5e55" }}>— Marcus Webb, Founder & CEO</footer>
+          <footer className="fira" style={{ fontSize:11,color:"#6b5e55" }}>— Arjun Sharma, Founder & CEO</footer>
         </blockquote>
         <div style={{ textAlign:"center",marginBottom:64 }}>
           <p className="fira" style={{ fontSize:11,letterSpacing:"0.4em",color:"#00FF41",marginBottom:12 }}>// COMMIT HISTORY</p>

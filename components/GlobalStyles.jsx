@@ -44,6 +44,34 @@ const GlobalStyles = () => (
     .btn-green:hover { box-shadow:0 0 24px rgba(0,255,65,0.5); transform:scale(1.04); }
     button { cursor:pointer; }
     input, textarea, select { font-family: 'Fira Code', monospace; }
+
+    /* About page – responsive two-column layout */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .about-nav {
+        position: static !important;
+        display: flex;
+        overflow-x: auto;
+        padding: 16px 0 24px;
+        border-bottom: 1px solid rgba(45,27,19,0.1);
+        margin-bottom: 40px;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+      .about-nav::-webkit-scrollbar { display: none; }
+      .about-nav-track { display: flex; flex-direction: row; gap: 0; }
+      .about-nav-indicator { display: none !important; }
+      .about-nav-cta { display: none; }
+    }
   `}</style>
 );
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import INR from "../components/INR";
 
 function PageMenu() {
@@ -8,6 +8,30 @@ function PageMenu() {
   const [cartOpen,  setCartOpen]  = useState(false);
   const [toast,     setToast]     = useState(null); // { name }
   const [ordered,   setOrdered]   = useState(false);
+  const [couponInput,  setCouponInput]  = useState("");
+  const [appliedCode,  setAppliedCode]  = useState(null); // { code, pct, label }
+  const [couponError,  setCouponError]  = useState("");
+  const [showCodes,    setShowCodes]    = useState(false);
+
+  // Lock body scroll when cart is open
+  useEffect(() => {
+    document.body.style.overflow = cartOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [cartOpen]);
+
+  const DISCOUNT_CODES = [
+    { code:"FIRSTBREW",  pct:15, label:"15% off — first order" },
+    { code:"TECHCAFE10", pct:10, label:"10% off — tech community" },
+    { code:"COORG20",    pct:20, label:"20% off — bean orders only" },
+    { code:"BYTEBREW5",  pct:5,  label:"5% off — all orders" },
+  ];
+
+  const applyCode = () => {
+    const match = DISCOUNT_CODES.find(d => d.code === couponInput.trim().toUpperCase());
+    if (match) { setAppliedCode(match); setCouponError(""); }
+    else { setCouponError("Invalid code. Try one from the list below."); setAppliedCode(null); }
+  };
+  const removeCode = () => { setAppliedCode(null); setCouponInput(""); setCouponError(""); };
 
   const items = [
     { name:"System Espresso",        cat:"Espresso",  amt:"350",   desc:"Ethiopia Yirgacheffe · 9-bar · 28ml double shot",          tag:"BESTSELLER", img:"https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?w=320&q=80&fit=crop" },
@@ -46,6 +70,10 @@ function PageMenu() {
 
   const totalItems = Object.values(cart).reduce((a,b)=>a+b, 0);
   const totalAmt   = items.reduce((sum, item) => sum + (cart[item.name]||0) * numeric(item.amt), 0);
+  const discountAmt = appliedCode ? Math.round(totalAmt * appliedCode.pct / 100) : 0;
+  const afterDiscount = totalAmt - discountAmt;
+  const gst = Math.round(afterDiscount * 0.05);
+  const grandTotal = afterDiscount + gst;
   const cartItems  = items.filter(i => cart[i.name]);
   const filtered   = active==="All" ? items : items.filter(i=>i.cat===active);
 
@@ -54,6 +82,7 @@ function PageMenu() {
                       TRACEABLE:"rgba(0,140,100,0.88)", LIMITED:"rgba(180,30,100,0.88)", FRESH:"rgba(200,140,0,0.88)", VEGAN:"rgba(60,160,60,0.88)" };
 
   return (
+    <>
     <div className="page-fade" style={{ minHeight:"100vh", background:"#FFFDD0", position:"relative" }}>
       <style>{`
         @keyframes slideInRight { from{transform:translateX(100%);opacity:0} to{transform:translateX(0);opacity:1} }
@@ -166,21 +195,22 @@ function PageMenu() {
           })}
         </div>
       </div>
+    </div>{/* ── /page-fade ── */}
 
-      {/* ── Toast notification ── */}
-      {toast && (
-        <div style={{ position:"fixed",bottom:100,left:"50%",transform:"translateX(-50%)",background:"#2D1B13",color:"white",padding:"12px 24px",borderRadius:999,fontFamily:"'Fira Code',monospace",fontSize:12,fontWeight:600,zIndex:200,animation:"toastIn 1.8s ease forwards",whiteSpace:"nowrap",boxShadow:"0 8px 30px rgba(0,0,0,0.4)",border:"1px solid rgba(0,255,65,0.3)" }}>
-          ✓ &nbsp;{toast} added to cart
-        </div>
-      )}
+    {/* ── Toast notification ── */}
+    {toast && (
+      <div style={{ position:"fixed",bottom:100,left:"50%",transform:"translateX(-50%)",background:"#2D1B13",color:"white",padding:"12px 24px",borderRadius:999,fontFamily:"'Fira Code',monospace",fontSize:12,fontWeight:600,zIndex:9999,animation:"toastIn 1.8s ease forwards",whiteSpace:"nowrap",boxShadow:"0 8px 30px rgba(0,0,0,0.4)",border:"1px solid rgba(0,255,65,0.3)" }}>
+        ✓ &nbsp;{toast} added to cart
+      </div>
+    )}
 
-      {/* ── Cart Drawer ── */}
-      {cartOpen && (
-        <>
-          {/* Backdrop */}
-          <div onClick={()=>setCartOpen(false)} style={{ position:"fixed",inset:0,background:"rgba(0,0,0,0.5)",zIndex:100,backdropFilter:"blur(4px)" }} />
-          {/* Drawer */}
-          <div style={{ position:"fixed",top:0,right:0,bottom:0,width:"min(420px,100vw)",background:"#1a0d06",zIndex:101,display:"flex",flexDirection:"column",animation:"slideInRight 0.35s cubic-bezier(0.23,1,0.32,1)",boxShadow:"-8px 0 40px rgba(0,0,0,0.5)" }}>
+    {/* ── Cart Drawer ── */}
+    {cartOpen && (
+      <>
+        {/* Backdrop */}
+        <div onClick={()=>setCartOpen(false)} style={{ position:"fixed",inset:0,background:"rgba(0,0,0,0.65)",zIndex:999,backdropFilter:"blur(6px)" }} />
+        {/* Drawer */}
+          <div style={{ position:"fixed",top:0,right:0,bottom:0,width:"min(460px,100vw)",background:"#1a0d06",zIndex:1000,display:"flex",flexDirection:"column",animation:"slideInRight 0.35s cubic-bezier(0.23,1,0.32,1)",boxShadow:"-8px 0 60px rgba(0,0,0,0.7)" }}>
             {/* Drawer header */}
             <div style={{ padding:"24px 24px 20px",borderBottom:"1px solid rgba(255,255,255,0.08)",display:"flex",justifyContent:"space-between",alignItems:"center" }}>
               <div>
@@ -198,18 +228,22 @@ function PageMenu() {
                   <p className="fira" style={{ fontSize:12 }}>Your cart is empty</p>
                 </div>
               ) : cartItems.map(item=>(
-                <div key={item.name} className="cart-item-row">
-                  <img src={item.img} alt={item.name} style={{ width:52,height:52,borderRadius:12,objectFit:"cover",flexShrink:0 }} onError={e=>e.target.style.display="none"} />
-                  <div style={{ flex:1,minWidth:0 }}>
-                    <p className="playfair" style={{ fontWeight:700,fontSize:14,color:"white",marginBottom:2,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap" }}>{item.name}</p>
-                    <p style={{ fontFamily:"system-ui,sans-serif",fontSize:13,fontWeight:700,color:"#c8902a" }}>&#8377;{item.amt}</p>
+                <div key={item.name} style={{ display:"grid",gridTemplateColumns:"56px 1fr auto auto",alignItems:"center",gap:12,padding:"14px 0",borderBottom:"1px solid rgba(255,255,255,0.07)" }}>
+                  {/* Thumbnail */}
+                  <img src={item.img} alt={item.name} style={{ width:56,height:56,borderRadius:12,objectFit:"cover" }} onError={e=>e.target.style.display="none"} />
+                  {/* Name + unit price */}
+                  <div style={{ minWidth:0 }}>
+                    <p className="playfair" style={{ fontWeight:700,fontSize:14,color:"white",marginBottom:3,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap" }}>{item.name}</p>
+                    <p style={{ fontFamily:"system-ui,sans-serif",fontSize:12,fontWeight:600,color:"#c8902a" }}>&#8377;{item.amt} each</p>
                   </div>
-                  <div style={{ display:"flex",alignItems:"center",gap:8,flexShrink:0 }}>
-                    <button className="qty-btn" onClick={()=>changeQty(item.name,-1)} style={{ background:"rgba(255,255,255,0.08)",color:"white" }}>−</button>
-                    <span className="fira" style={{ fontSize:13,fontWeight:700,color:"white",minWidth:16,textAlign:"center" }}>{cart[item.name]}</span>
-                    <button className="qty-btn" onClick={()=>changeQty(item.name,1)} style={{ background:"rgba(0,255,65,0.15)",color:"#00FF41" }}>+</button>
+                  {/* Qty stepper */}
+                  <div style={{ display:"flex",alignItems:"center",gap:6 }}>
+                    <button className="qty-btn" onClick={()=>changeQty(item.name,-1)} style={{ background:"rgba(255,255,255,0.08)",color:"white",width:28,height:28 }}>−</button>
+                    <span className="fira" style={{ fontSize:13,fontWeight:700,color:"white",minWidth:18,textAlign:"center" }}>{cart[item.name]}</span>
+                    <button className="qty-btn" onClick={()=>changeQty(item.name,1)} style={{ background:"rgba(0,255,65,0.15)",color:"#00FF41",width:28,height:28 }}>+</button>
                   </div>
-                  <p style={{ fontFamily:"system-ui,sans-serif",fontSize:14,fontWeight:900,color:"white",flexShrink:0,minWidth:64,textAlign:"right" }}>
+                  {/* Line total */}
+                  <p style={{ fontFamily:"system-ui,sans-serif",fontSize:14,fontWeight:900,color:"white",textAlign:"right",minWidth:56 }}>
                     &#8377;{(numeric(item.amt)*cart[item.name]).toLocaleString("en-IN")}
                   </p>
                 </div>
@@ -219,25 +253,85 @@ function PageMenu() {
             {/* Drawer footer */}
             {cartItems.length > 0 && !ordered && (
               <div style={{ padding:"20px 24px 28px",borderTop:"1px solid rgba(255,255,255,0.08)" }}>
-                <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8 }}>
+
+                {/* ── Coupon code input ── */}
+                {!appliedCode ? (
+                  <div style={{ marginBottom:16 }}>
+                    <div style={{ display:"flex",gap:8,marginBottom:6 }}>
+                      <input
+                        value={couponInput}
+                        onChange={e=>{ setCouponInput(e.target.value.toUpperCase()); setCouponError(""); }}
+                        onKeyDown={e=>e.key==="Enter" && applyCode()}
+                        placeholder="PROMO CODE"
+                        className="fira"
+                        style={{ flex:1,background:"rgba(255,255,255,0.06)",border:`1px solid ${couponError?"#ff4444":"rgba(255,255,255,0.12)"}`,borderRadius:10,padding:"10px 14px",color:"white",fontSize:11,letterSpacing:"0.1em",outline:"none" }}
+                      />
+                      <button onClick={applyCode} className="fira"
+                        style={{ background:"#2D1B13",border:"1px solid rgba(255,255,255,0.15)",color:"#00FF41",borderRadius:10,padding:"10px 16px",fontSize:11,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap",transition:"all 0.2s" }}
+                        onMouseEnter={e=>e.currentTarget.style.background="#3d2518"}
+                        onMouseLeave={e=>e.currentTarget.style.background="#2D1B13"}>
+                        Apply
+                      </button>
+                    </div>
+                    {couponError && <p className="fira" style={{ fontSize:10,color:"#ff6666",marginBottom:4 }}>{couponError}</p>}
+                    {/* Available codes toggle */}
+                    <button onClick={()=>setShowCodes(v=>!v)} className="fira"
+                      style={{ background:"none",border:"none",color:"#6b8f71",fontSize:10,cursor:"pointer",padding:0,letterSpacing:"0.08em",textDecoration:"underline dotted",textUnderlineOffset:3 }}>
+                      {showCodes ? "▲ hide available codes" : "▼ view available codes"}
+                    </button>
+                    {showCodes && (
+                      <div style={{ marginTop:10,background:"rgba(0,255,65,0.05)",border:"1px solid rgba(0,255,65,0.15)",borderRadius:10,padding:"12px 14px",display:"flex",flexDirection:"column",gap:8 }}>
+                        {DISCOUNT_CODES.map(d=>(
+                          <div key={d.code} style={{ display:"flex",alignItems:"center",justifyContent:"space-between",gap:8 }}>
+                            <div style={{ display:"flex",alignItems:"center",gap:8 }}>
+                              <span className="fira" style={{ background:"rgba(0,255,65,0.12)",color:"#00FF41",fontSize:10,fontWeight:700,padding:"3px 8px",borderRadius:6,letterSpacing:"0.1em",border:"1px solid rgba(0,255,65,0.25)" }}>{d.code}</span>
+                              <span className="fira" style={{ fontSize:10,color:"#9ca3af" }}>{d.label}</span>
+                            </div>
+                            <button onClick={()=>{ setCouponInput(d.code); setCouponError(""); }} className="fira"
+                              style={{ background:"none",border:"none",color:"#c8902a",fontSize:10,cursor:"pointer",padding:0,textDecoration:"underline" }}>
+                              use
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div style={{ display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:16,background:"rgba(0,255,65,0.08)",border:"1px solid rgba(0,255,65,0.25)",borderRadius:10,padding:"10px 14px" }}>
+                    <div>
+                      <span className="fira" style={{ fontSize:10,color:"#00FF41",fontWeight:700,letterSpacing:"0.1em" }}>✓ {appliedCode.code}</span>
+                      <span className="fira" style={{ fontSize:10,color:"#9ca3af",marginLeft:8 }}>{appliedCode.label}</span>
+                    </div>
+                    <button onClick={removeCode} style={{ background:"none",border:"none",color:"#6b5e55",cursor:"pointer",fontSize:16,lineHeight:1 }}>×</button>
+                  </div>
+                )}
+
+                {/* ── Order summary ── */}
+                <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6 }}>
                   <span className="fira" style={{ fontSize:11,color:"#6b5e55" }}>Subtotal</span>
-                  <span style={{ fontFamily:"system-ui,sans-serif",fontSize:15,fontWeight:700,color:"white" }}>&#8377;{totalAmt.toLocaleString("en-IN")}</span>
+                  <span style={{ fontFamily:"system-ui,sans-serif",fontSize:14,fontWeight:700,color:"white" }}>&#8377;{totalAmt.toLocaleString("en-IN")}</span>
                 </div>
-                <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20 }}>
+                {appliedCode && (
+                  <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6 }}>
+                    <span className="fira" style={{ fontSize:11,color:"#00FF41" }}>Discount ({appliedCode.pct}%)</span>
+                    <span style={{ fontFamily:"system-ui,sans-serif",fontSize:14,fontWeight:700,color:"#00FF41" }}>− &#8377;{discountAmt.toLocaleString("en-IN")}</span>
+                  </div>
+                )}
+                <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16 }}>
                   <span className="fira" style={{ fontSize:11,color:"#6b5e55" }}>Taxes (5% GST)</span>
-                  <span style={{ fontFamily:"system-ui,sans-serif",fontSize:15,fontWeight:700,color:"white" }}>&#8377;{Math.round(totalAmt*0.05).toLocaleString("en-IN")}</span>
+                  <span style={{ fontFamily:"system-ui,sans-serif",fontSize:14,fontWeight:700,color:"white" }}>&#8377;{gst.toLocaleString("en-IN")}</span>
                 </div>
-                <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20,paddingTop:16,borderTop:"1px solid rgba(255,255,255,0.1)" }}>
+                <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20,paddingTop:14,borderTop:"1px solid rgba(255,255,255,0.1)" }}>
                   <span className="playfair" style={{ fontWeight:900,fontSize:18,color:"white" }}>Total</span>
-                  <span style={{ fontFamily:"system-ui,sans-serif",fontWeight:900,fontSize:22,color:"#00FF41" }}>&#8377;{Math.round(totalAmt*1.05).toLocaleString("en-IN")}</span>
+                  <span style={{ fontFamily:"system-ui,sans-serif",fontWeight:900,fontSize:22,color:"#00FF41" }}>&#8377;{grandTotal.toLocaleString("en-IN")}</span>
                 </div>
-                <button onClick={()=>{ setOrdered(true); setTimeout(()=>{ setCart({}); setOrdered(false); setCartOpen(false); },3000); }}
+                <button onClick={()=>{ setOrdered(true); setTimeout(()=>{ setCart({}); setOrdered(false); setCartOpen(false); setAppliedCode(null); setCouponInput(""); },3000); }}
                   style={{ width:"100%",background:"#00FF41",color:"#0a0a0a",border:"none",borderRadius:14,padding:"16px",fontFamily:"'Fira Code',monospace",fontSize:13,fontWeight:900,cursor:"pointer",transition:"all 0.3s" }}
                   onMouseEnter={e=>e.currentTarget.style.boxShadow="0 0 24px rgba(0,255,65,0.5)"}
                   onMouseLeave={e=>e.currentTarget.style.boxShadow="none"}>
                   Place Order →
                 </button>
-                <button onClick={()=>{setCart({});}} style={{ width:"100%",background:"none",border:"none",color:"#6b5e55",fontFamily:"'Fira Code',monospace",fontSize:11,cursor:"pointer",marginTop:10,padding:8 }}>
+                <button onClick={()=>{ setCart({}); removeCode(); }} style={{ width:"100%",background:"none",border:"none",color:"#6b5e55",fontFamily:"'Fira Code',monospace",fontSize:11,cursor:"pointer",marginTop:10,padding:8 }}>
                   Clear Cart
                 </button>
               </div>
@@ -252,7 +346,7 @@ function PageMenu() {
           </div>
         </>
       )}
-    </div>
+    </>
   );
 }
 

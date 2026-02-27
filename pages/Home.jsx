@@ -1,4 +1,5 @@
 import BeanText from "../components/BeanText";
+import INR from "../components/INR";
 
 /* ─── Star field data (generated once) ────────────────────── */
 const stars = Array.from({length:180},(_,i)=>({
@@ -9,67 +10,57 @@ const stars = Array.from({length:180},(_,i)=>({
 /* ─── Coffee visualisation sub-components ─────────────────── */
 function EspressoVis() {
   return (
-    <div style={{ position:"relative",width:"100%",height:200,display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden",background:"radial-gradient(ellipse at 50% 80%,#3d1c0a,#1a0a04)" }}>
-      <div style={{ position:"absolute",inset:0,opacity:0.2,backgroundImage:"radial-gradient(circle,#8B4513 1px,transparent 1px)",backgroundSize:"18px 18px" }} />
-      <div style={{ filter:"drop-shadow(0 8px 24px rgba(0,0,0,0.7))" }}>
-        <div style={{ width:64,height:48,borderRadius:"0 0 16px 16px",position:"relative",overflow:"hidden",background:"linear-gradient(135deg,#f5f0ea,#e8e0d5)",borderTop:"3px solid #d4ccc4" }}>
-          <div style={{ position:"absolute",inset:0,background:"linear-gradient(to bottom,#2a0e04,#4a1a08)",borderRadius:"0 0 16px 16px" }} />
-          <div style={{ position:"absolute",top:8,left:8,right:8,height:12,borderRadius:99,opacity:0.6,background:"radial-gradient(ellipse,#c8a882,transparent 70%)" }} />
-        </div>
-        <div style={{ position:"absolute",right:-16,top:8,width:20,height:24,borderRadius:"0 99px 99px 0",border:"3px solid #d4ccc4",borderLeft:"none" }} />
-        <div style={{ width:80,height:8,borderRadius:99,margin:"0 auto",background:"linear-gradient(90deg,#c8c0b8,#e0d8d0,#c8c0b8)" }} />
-      </div>
+    <div style={{ position:"relative",width:"100%",height:220,overflow:"hidden" }}>
+      <img
+        src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=700&auto=format&fit=crop&q=80"
+        alt="System Espresso"
+        style={{ width:"100%",height:"100%",objectFit:"cover",objectPosition:"center",display:"block" }}
+      />
+      <div style={{ position:"absolute",inset:0,background:"linear-gradient(to top,rgba(45,27,19,0.85) 0%,rgba(45,27,19,0.25) 50%,transparent 100%)" }} />
+      <div style={{ position:"absolute",inset:0,background:"radial-gradient(ellipse at 50% 0%,rgba(200,144,42,0.18),transparent 70%)" }} />
     </div>
   );
 }
 
 function LatteVis() {
   return (
-    <div style={{ position:"relative",width:"100%",height:200,display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden",background:"radial-gradient(ellipse at 50% 80%,#1a3a4a,#0a1a24)" }}>
-      <div style={{ filter:"drop-shadow(0 8px 24px rgba(0,0,0,0.7))",position:"relative" }}>
-        <div style={{ width:80,height:64,borderRadius:"8px 8px 99px 99px",overflow:"hidden",background:"linear-gradient(135deg,#4a90c4,#2a6090)",border:"2px solid #5aa0d4" }}>
-          <div style={{ position:"absolute",top:4,left:4,right:4,height:40,background:"linear-gradient(to bottom,#c8a882,#a07850)",display:"flex",alignItems:"center",justifyContent:"center" }}>
-            <svg viewBox="0 0 60 50" style={{ width:48,height:40,opacity:0.9 }}>
-              <ellipse cx="30" cy="25" rx="14" ry="20" fill="none" stroke="#f5e6cc" strokeWidth="1.5"/>
-              <line x1="30" y1="5" x2="30" y2="45" stroke="#f5e6cc" strokeWidth="1"/>
-              <line x1="22" y1="15" x2="30" y2="20" stroke="#f5e6cc" strokeWidth="0.8"/>
-              <line x1="38" y1="15" x2="30" y2="20" stroke="#f5e6cc" strokeWidth="0.8"/>
-            </svg>
-          </div>
-        </div>
-        <div style={{ position:"absolute",right:-16,top:12,width:20,height:28,borderRadius:"0 99px 99px 0",border:"3px solid #5aa0d4",borderLeft:"none" }} />
-        <div style={{ width:96,height:8,borderRadius:99,marginLeft:-8,background:"linear-gradient(90deg,#3a7ab0,#5aa0d4,#3a7ab0)" }} />
-      </div>
+    <div style={{ position:"relative",width:"100%",height:220,overflow:"hidden" }}>
+      <img
+        src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=700&auto=format&fit=crop&q=80"
+        alt="Cloud Foam Latte"
+        style={{ width:"100%",height:"100%",objectFit:"cover",objectPosition:"center",display:"block" }}
+      />
+      <div style={{ position:"absolute",inset:0,background:"linear-gradient(to top,rgba(10,26,36,0.88) 0%,rgba(10,26,36,0.3) 50%,transparent 100%)" }} />
+      <div style={{ position:"absolute",inset:0,background:"radial-gradient(ellipse at 50% 0%,rgba(96,165,250,0.15),transparent 70%)" }} />
     </div>
   );
 }
 
 function BeansVis() {
   return (
-    <div style={{ position:"relative",width:"100%",height:200,display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden",background:"radial-gradient(ellipse at 50% 80%,#2d1a08,#120a02)" }}>
-      {Array.from({length:24},(_,i)=>(
-        <div key={i} style={{ position:"absolute",left:`${12+(i%6)*14+(Math.floor(i/6)%2)*7}%`,top:`${12+Math.floor(i/6)*24}%`,transform:`rotate(${(i*47)%180-90}deg)` }}>
-          <div style={{ width:22,height:14,borderRadius:"50%",background:`hsl(22,70%,${20+(i%4)*6}%)`,position:"relative" }}>
-            <div style={{ position:"absolute",top:"50%",left:0,right:0,height:1,background:`hsl(22,60%,${14+(i%4)*4}%)`,transform:"translateY(-50%)" }} />
-          </div>
-        </div>
-      ))}
-      <div style={{ position:"relative",zIndex:2,width:72,height:72,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",background:"rgba(45,27,19,0.8)",border:"2px solid rgba(255,200,100,0.3)",fontSize:28 }}>☕</div>
+    <div style={{ position:"relative",width:"100%",height:220,overflow:"hidden" }}>
+      <img
+        src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=700&auto=format&fit=crop&q=80"
+        alt="Open Source Beans"
+        style={{ width:"100%",height:"100%",objectFit:"cover",objectPosition:"center",display:"block" }}
+      />
+      <div style={{ position:"absolute",inset:0,background:"linear-gradient(to top,rgba(18,10,2,0.9) 0%,rgba(18,10,2,0.35) 50%,transparent 100%)" }} />
+      <div style={{ position:"absolute",inset:0,background:"radial-gradient(ellipse at 50% 0%,rgba(0,255,65,0.1),transparent 70%)" }} />
     </div>
   );
 }
 
 /* ─── Featured brews data ──────────────────────────────────── */
 const brews = [
-  { title:"System Espresso", tag:"SINGLE ORIGIN", desc:"Ethiopia Yirgacheffe · 9-bar precision · The OS of great coffee.", price:"$4.20", V:EspressoVis, accent:"#c8902a" },
-  { title:"Cloud Foam Lattes", tag:"MICRO-FOAM SERIES", desc:"Free-pour latte art · Blue ceramic · Silky oat milk at 65°C.", price:"$5.80", V:LatteVis, accent:"#60a5fa" },
-  { title:"Open Source Beans", tag:"DARK ROAST · TRACEABLE", desc:"Blockchain-logged Colombian Huila. No secrets in the stack.", price:"$18.00", V:BeansVis, accent:"#00FF41" },
+  { title:"System Espresso", tag:"SINGLE ORIGIN", desc:"Ethiopia Yirgacheffe · 9-bar precision · The OS of great coffee.", price:"350", V:EspressoVis, accent:"#c8902a" },
+  { title:"Cloud Foam Lattes", tag:"MICRO-FOAM SERIES", desc:"Free-pour latte art · Blue ceramic · Silky oat milk at 65°C.", price:"490", V:LatteVis, accent:"#60a5fa" },
+  { title:"Open Source Beans", tag:"DARK ROAST · TRACEABLE", desc:"Blockchain-logged Colombian Huila. No secrets in the stack.", price:"1,499", V:BeansVis, accent:"#00FF41" },
 ];
 
 /* ─── Home Page ────────────────────────────────────────────── */
 function PageHome({ navigate }) {
   return (
-    <div className="page-fade">
+    <div className="page-fade" style={{ background:"#FFFDD0" }}>
       {/* HERO */}
       <section className="slant-bottom" style={{ background:"linear-gradient(175deg,#0a0f0a 0%,#111a0e 20%,#1a1208 50%,#2d1b13 80%,#3d2518 100%)", minHeight:"100vh", paddingBottom:140, position:"relative" }}>
         <div style={{ position:"absolute",inset:0,overflow:"hidden",pointerEvents:"none" }}>
@@ -139,7 +130,7 @@ function PageHome({ navigate }) {
                   <h3 className="playfair" style={{ fontWeight:900,fontSize:20,color:"#2D1B13",marginBottom:8 }}>{item.title}</h3>
                   <p className="fira" style={{ fontSize:11,color:"#78716c",lineHeight:1.7,marginBottom:20 }}>{item.desc}</p>
                   <div style={{ display:"flex",alignItems:"center",justifyContent:"space-between" }}>
-                    <span className="playfair" style={{ fontWeight:900,fontSize:24,color:"#2D1B13" }}>{item.price}</span>
+                    <span className="playfair" style={{ fontWeight:900,fontSize:24,color:"#2D1B13" }}><INR amount={item.price}/></span>
                     <button onClick={()=>{navigate("Menu");window.scrollTo(0,0);}}
                       style={{ background:"#2D1B13",color:"#FFFDD0",border:"none",borderRadius:999,padding:"8px 20px",fontFamily:"'Fira Code',monospace",fontSize:11,fontWeight:600,transition:"all 0.3s" }}>
                       Order →
