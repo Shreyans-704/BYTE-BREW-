@@ -8,6 +8,7 @@ import PageMenu from "./pages/Menu";
 import PageStory from "./pages/Story";
 import PageCommunity from "./pages/Community";
 import PageContact from "./pages/Contact";
+import PageOrderWaitGame from "./pages/OrderWaitGame";
 
 /* ─── ROUTER / APP SHELL ──────────────────────────────────── */
 const PAGES = {
@@ -17,6 +18,7 @@ const PAGES = {
   Story: PageStory,
   Community: PageCommunity,
   Contact: PageContact,
+  Game: PageOrderWaitGame,
 };
 
 export default function App() {
