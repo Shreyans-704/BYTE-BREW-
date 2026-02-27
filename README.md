@@ -1,5 +1,6 @@
 # BYTE-BREW-
-We treat every cup like a production deploy. cafe webiste 
+"ByteBrew — Artisan coffee for the digital age. Single-origin beans, precision extraction, and a community built for developers and creatives. Order online or visit us in San Francisco."
+
 <img width="1131" height="865" alt="image" src="https://github.com/user-attachments/assets/3b6ad752-80a5-4d72-912d-3ef8ef82838b" />
 <img width="1074" height="635" alt="image" src="https://github.com/user-attachments/assets/3c7b1c67-6443-45d9-a6c0-0ab7d868d172" />
 <img width="1117" height="816" alt="image" src="https://github.com/user-attachments/assets/a24d971e-66f3-4e42-926e-e168da7ff96b" />
