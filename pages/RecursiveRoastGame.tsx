@@ -186,7 +186,7 @@ export default function RecursiveRoastGame(): JSX.Element {
   const fillPct = Math.round((correctPrefix / EXPECTED_SEQUENCE.length) * 100);
 
   return (
-    <div style={{ minHeight: "100vh", background: "#1A1A1A", color: "#00FF41", padding: 20, fontFamily: "'Fira Code', monospace" }}>
+    <div className="game-page-main" style={{ minHeight: "100vh", background: "#1A1A1A", color: "#00FF41", padding: 20, fontFamily: "'Fira Code', monospace" }}>
       <h2 className="playfair" style={{ fontSize: 22, marginBottom: 12 }}>Recursive Roast — Order Zone</h2>
       <div style={{ display: "grid", gridTemplateColumns: "320px 1fr 320px", gap: 18 }}>
         {/* Palette */}

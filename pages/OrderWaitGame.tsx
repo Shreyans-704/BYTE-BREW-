@@ -149,7 +149,7 @@ export default function RecursiveRoastGame(): JSX.Element {
   }, [fillPct]);
 
   return (
-    <div className="roast-wrap">
+    <div className="roast-wrap game-page-main">
       <h2 className="playfair roast-title">Recursive Roast — Order Zone</h2>
       <div className="roast-grid">
         <div className="panel">

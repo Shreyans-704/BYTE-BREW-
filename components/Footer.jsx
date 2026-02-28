@@ -6,7 +6,7 @@ function Footer({ navigate }) {
     { heading:"Community Info", links:["About Us","Our Story","Events","Newsletter","Careers"] },
   ];
   return (
-    <footer style={{ background:"#1A0F0A", borderTop:"1px solid rgba(0,255,65,0.1)" }}>
+    <footer style={{ background: "#1A0F0A", borderTop: "1px solid rgba(0,255,65,0.1)", position: "relative", zIndex: 0 }}>
       <div style={{ maxWidth:1280, margin:"0 auto", padding:"64px 24px 0" }}>
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(160px,1fr))", gap:40, marginBottom:48 }}>
           <div>

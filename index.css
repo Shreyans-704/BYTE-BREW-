@@ -2,3 +2,19 @@ body {
   margin: 0;
   background: #0a0a0a;
 }
+/* Prevent games section and footer overlap on mobile */
+.game-page-main {
+  margin-bottom: 80px; /* Ensures space above footer, adjust as needed */
+  position: relative; /* create stacking context for game area */
+  z-index: 20; /* keep game visuals above footer so animations are visible */
+}
+
+/* Ensure any small floating in-game elements don't escape visually */
+.game-overlay-fixed {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  pointer-events: none;
+}
