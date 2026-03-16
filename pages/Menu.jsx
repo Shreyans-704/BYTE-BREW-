@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import INR from "../components/INR";
 
 function PageMenu() {
-  const cats = ["All","Espresso","Cold Brew","Specialty","Beans","Food"];
+  const cats = ["All","Hot Drinks","Cold Drinks","Food","Desserts"];
   const [active,    setActive]    = useState("All");
   const [cart,      setCart]      = useState({});   // { itemName: qty }
   const [cartOpen,  setCartOpen]  = useState(false);
@@ -22,7 +22,7 @@ function PageMenu() {
   const DISCOUNT_CODES = [
     { code:"FIRSTBREW",  pct:15, label:"15% off — first order" },
     { code:"TECHCAFE10", pct:10, label:"10% off — tech community" },
-    { code:"COORG20",    pct:20, label:"20% off — bean orders only" },
+    { code:"BREW20",     pct:20, label:"20% off — food orders" },
     { code:"BYTEBREW5",  pct:5,  label:"5% off — all orders" },
   ];
 
@@ -34,22 +34,114 @@ function PageMenu() {
   const removeCode = () => { setAppliedCode(null); setCouponInput(""); setCouponError(""); };
 
   const items = [
-    { name:"System Espresso",        cat:"Espresso",  amt:"350",   desc:"Ethiopia Yirgacheffe · 9-bar · 28ml double shot",          tag:"BESTSELLER", img:"https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?w=320&q=80&fit=crop" },
-    { name:"Kernel Cortado",         cat:"Espresso",  amt:"400",   desc:"1:1 espresso to steamed milk · House blend",               tag:"",           img:"https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=320&q=80&fit=crop" },
-    { name:"Flat White Build",       cat:"Espresso",  amt:"435",   desc:"Ristretto base · Microfoam · Blue ceramic",                tag:"POPULAR",    img:"https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=320&q=80&fit=crop" },
-    { name:"Debug Macchiato",        cat:"Espresso",  amt:"375",   desc:"Double ristretto · Dash of textured milk",                 tag:"",           img:"https://images.unsplash.com/photo-1498804103079-a6351b050096?w=320&q=80&fit=crop" },
-    { name:"Cloud Foam Latte",       cat:"Cold Brew", amt:"500",   desc:"24h cold brew · Nitrogen charged · Cascara foam",          tag:"NEW",        img:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=320&q=80&fit=crop" },
-    { name:"Overflow Iced Matcha",   cat:"Cold Brew", amt:"545",   desc:"Ceremonial matcha · Oat milk · Cold brew float",           tag:"SEASONAL",   img:"https://images.unsplash.com/photo-1536256263959-770b48d82b0a?w=320&q=80&fit=crop" },
-    { name:"Ice Cold Pipeline",      cat:"Cold Brew", amt:"460",   desc:"Slow-drip concentrate · Sphere ice",                      tag:"",           img:"https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=320&q=80&fit=crop" },
-    { name:"Neural Blend Latte",     cat:"Specialty", amt:"585",   desc:"House blend + ashwagandha + lion's mane · Oat milk",      tag:"FUNCTIONAL", img:"https://images.unsplash.com/photo-1541167760496-1628856ab772?w=320&q=80&fit=crop" },
-    { name:"Circuit Breaker",        cat:"Specialty", amt:"715",   desc:"Triple espresso · Honey · Cardamom · Ginger",             tag:"STRONG",     img:"https://images.unsplash.com/photo-1559496417-e7f25cb247f3?w=320&q=80&fit=crop" },
-    { name:"Uptime Chai",            cat:"Specialty", amt:"485",   desc:"Masala chai concentrate · Steamed oat milk",              tag:"",           img:"https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=320&q=80&fit=crop" },
-    { name:"Open Source Beans 250g", cat:"Beans",     amt:"1,510", desc:"Colombian Huila · Dark roast · Whole bean",               tag:"TRACEABLE",  img:"https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=320&q=80&fit=crop" },
-    { name:"Light Kernel Roast 250g",cat:"Beans",     amt:"1,850", desc:"Ethiopia Guji Natural · Blueberry & jasmine",             tag:"LIMITED",    img:"https://images.unsplash.com/photo-1611854779393-1b2da9d400fe?w=320&q=80&fit=crop" },
-    { name:"House Blend 500g",       cat:"Beans",     amt:"2,690", desc:"Brazil + Ethiopia · Medium roast · Daily driver",         tag:"",           img:"https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=320&q=80&fit=crop" },
-    { name:"Croissant.exe",          cat:"Food",      amt:"375",   desc:"Butter-laminated · Baked 6AM · 84 layers",                tag:"FRESH",      img:"https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=320&q=80&fit=crop" },
-    { name:"Avocado Stack",          cat:"Food",      amt:"1,010", desc:"Sourdough · Smashed avo · Dukkah · Poached egg",          tag:"",           img:"https://images.unsplash.com/photo-1525351484163-7529414344d8?w=320&q=80&fit=crop" },
-    { name:"Granola Kernel",         cat:"Food",      amt:"755",   desc:"House granola · Coconut yoghurt · Seasonal fruit",        tag:"VEGAN",      img:"https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=320&q=80&fit=crop" },
+    // HOT DRINKS
+    { name:"Espresso",               cat:"Hot Drinks", amt:"130",  desc:"Strong, bold, and aromatic espresso shot",                  tag:"", img:"https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?w=320&q=80&fit=crop" },
+    { name:"Americano",              cat:"Hot Drinks", amt:"180",  desc:"Espresso with hot water for a smooth blend",               tag:"", img:"https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=320&q=80&fit=crop" },
+    { name:"Cappuccino",             cat:"Hot Drinks", amt:"190",  desc:"Perfect balance of espresso, steamed milk & foam",         tag:"POPULAR", img:"https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=320&q=80&fit=crop" },
+    { name:"Café Latte",             cat:"Hot Drinks", amt:"190",  desc:"Creamy espresso with steamed milk",                        tag:"", img:"https://images.unsplash.com/photo-1498804103079-a6351b050096?w=320&q=80&fit=crop" },
+    { name:"Flat White",             cat:"Hot Drinks", amt:"220",  desc:"Espresso with velvety microfoam milk",                     tag:"BESTSELLER", img:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=320&q=80&fit=crop" },
+    { name:"Espresso Macchiato",     cat:"Hot Drinks", amt:"220",  desc:"Espresso 'marked' with a touch of foam",                   tag:"", img:"https://images.unsplash.com/photo-1536256263959-770b48d82b0a?w=320&q=80&fit=crop" },
+    { name:"Irish Coffee",           cat:"Hot Drinks", amt:"220",  desc:"Espresso with Irish whiskey and cream",                    tag:"", img:"https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=320&q=80&fit=crop" },
+    { name:"Café Mocha",             cat:"Hot Drinks", amt:"220",  desc:"Chocolate and espresso harmony in one cup",                tag:"", img:"https://images.unsplash.com/photo-1541167760496-1628856ab772?w=320&q=80&fit=crop" },
+    { name:"Hot Vietnamese",         cat:"Hot Drinks", amt:"220",  desc:"Rich drip coffee with sweetened condensed milk",           tag:"", img:"https://images.unsplash.com/photo-1559496417-e7f25cb247f3?w=320&q=80&fit=crop" },
+    { name:"Classic Hot Chocolate",  cat:"Hot Drinks", amt:"160",  desc:"Silky smooth hot chocolate",                               tag:"", img:"https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=320&q=80&fit=crop" },
+    { name:"Mint Hot Chocolate",     cat:"Hot Drinks", amt:"200",  desc:"Chocolate with refreshing mint flavor",                    tag:"", img:"https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=320&q=80&fit=crop" },
+    { name:"Nutella Hot Chocolate",  cat:"Hot Drinks", amt:"220",  desc:"Hazelnut chocolate goodness",                              tag:"POPULAR", img:"https://images.unsplash.com/photo-1611854779393-1b2da9d400fe?w=320&q=80&fit=crop" },
+    { name:"Sea Salt Caramel Hot Chocolate", cat:"Hot Drinks", amt:"240", desc:"Caramel sweetness with sea salt balance", tag:"", img:"https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=320&q=80&fit=crop" },
+    { name:"Masala Chai",            cat:"Hot Drinks", amt:"100",  desc:"Traditional Indian spiced tea",                             tag:"", img:"https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=320&q=80&fit=crop" },
+    { name:"Pure Green Tea",         cat:"Hot Drinks", amt:"180",  desc:"Fresh and organic green tea",                              tag:"", img:"https://images.unsplash.com/photo-1525351484163-7529414344d8?w=320&q=80&fit=crop" },
+    { name:"Hibiscus Green Tea",     cat:"Hot Drinks", amt:"180",  desc:"Floral and refreshing blend",                              tag:"", img:"https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=320&q=80&fit=crop" },
+    { name:"Chamomile Herb Tea",     cat:"Hot Drinks", amt:"180",  desc:"Calming chamomile infusion",                               tag:"", img:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=320&q=80&fit=crop" },
+    { name:"Ginger Lemon Tea",       cat:"Hot Drinks", amt:"180",  desc:"Spicy ginger with zesty lemon",                            tag:"", img:"https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=320&q=80&fit=crop" },
+    { name:"Blue Pea Flower Tea",    cat:"Hot Drinks", amt:"180",  desc:"Exotic blue flower tea",                                   tag:"NEW", img:"https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=320&q=80&fit=crop" },
+    { name:"Rose Oolong Tea",        cat:"Hot Drinks", amt:"180",  desc:"Floral oolong with rose notes",                            tag:"", img:"https://images.unsplash.com/photo-1498804103079-a6351b050096?w=320&q=80&fit=crop" },
+    { name:"Moroccan Mint Green Tea",cat:"Hot Drinks", amt:"180",  desc:"Aromatic mint and green tea blend",                        tag:"", img:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=320&q=80&fit=crop" },
+
+    // COLD DRINKS
+    { name:"Affogato",               cat:"Cold Drinks", amt:"210", desc:"Espresso poured over ice cream",                           tag:"", img:"https://images.unsplash.com/photo-1536256263959-770b48d82b0a?w=320&q=80&fit=crop" },
+    { name:"Iced Latte",             cat:"Cold Drinks", amt:"220", desc:"Smooth iced espresso with milk",                           tag:"", img:"https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=320&q=80&fit=crop" },
+    { name:"Blended Cold Coffee",    cat:"Cold Drinks", amt:"250", desc:"Creamy blended cold coffee delight",                       tag:"", img:"https://images.unsplash.com/photo-1541167760496-1628856ab772?w=320&q=80&fit=crop" },
+    { name:"Iced Mocha",             cat:"Cold Drinks", amt:"260", desc:"Chocolate and cold espresso blend",                        tag:"BESTSELLER", img:"https://images.unsplash.com/photo-1559496417-e7f25cb247f3?w=320&q=80&fit=crop" },
+    { name:"Sea Salt Caramel Frappe",cat:"Cold Drinks", amt:"280", desc:"Sweet caramel with salty finish",                          tag:"POPULAR", img:"https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=320&q=80&fit=crop" },
+    { name:"Java Chip Frappe",       cat:"Cold Drinks", amt:"260", desc:"Coffee with chocolate chip bliss",                         tag:"", img:"https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=320&q=80&fit=crop" },
+    { name:"Iced Mexican Mocha",     cat:"Cold Drinks", amt:"280", desc:"Spiced chocolate cold coffee",                             tag:"", img:"https://images.unsplash.com/photo-1611854779393-1b2da9d400fe?w=320&q=80&fit=crop" },
+    { name:"Irish Iced Frappe",      cat:"Cold Drinks", amt:"280", desc:"Irish whiskey flavored cold frappe",                       tag:"", img:"https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=320&q=80&fit=crop" },
+    { name:"Thai Frappe",            cat:"Cold Drinks", amt:"280", desc:"Cold Thai tea with cream",                                 tag:"", img:"https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=320&q=80&fit=crop" },
+    { name:"Iced Americano",         cat:"Cold Drinks", amt:"180", desc:"Chilled americano refresher",                              tag:"", img:"https://images.unsplash.com/photo-1525351484163-7529414344d8?w=320&q=80&fit=crop" },
+    { name:"Iced Tonic Peach",       cat:"Cold Drinks", amt:"230", desc:"Tonic water with peach essence",                           tag:"", img:"https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=320&q=80&fit=crop" },
+    { name:"Black Honey Lemon",      cat:"Cold Drinks", amt:"230", desc:"Honey and lemon cold tea",                                 tag:"", img:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=320&q=80&fit=crop" },
+    { name:"Orange Black",           cat:"Cold Drinks", amt:"280", desc:"Black tea with orange notes",                              tag:"", img:"https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=320&q=80&fit=crop" },
+    { name:"Iced Black Coconut",     cat:"Cold Drinks", amt:"230", desc:"Black tea with tropical coconut",                          tag:"NEW", img:"https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=320&q=80&fit=crop" },
+    { name:"Iced Vietnamese",        cat:"Cold Drinks", amt:"230", desc:"Chilled Vietnamese coffee",                                tag:"", img:"https://images.unsplash.com/photo-1498804103079-a6351b050096?w=320&q=80&fit=crop" },
+    { name:"Espresso Redbull",       cat:"Cold Drinks", amt:"250", desc:"Energy boost in a glass",                                  tag:"STRONG", img:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=320&q=80&fit=crop" },
+    { name:"Fresh Lemon Iced Tea",   cat:"Cold Drinks", amt:"220", desc:"Refreshing lemony chill",                                  tag:"", img:"https://images.unsplash.com/photo-1536256263959-770b48d82b0a?w=320&q=80&fit=crop" },
+    { name:"Fresh Peach Iced Tea",   cat:"Cold Drinks", amt:"220", desc:"Juicy peach cold brew",                                    tag:"", img:"https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=320&q=80&fit=crop" },
+    { name:"Fresh Watermelon Iced Tea", cat:"Cold Drinks", amt:"220", desc:"Sweet watermelon refresher", tag:"", img:"https://images.unsplash.com/photo-1541167760496-1628856ab772?w=320&q=80&fit=crop" },
+    { name:"Good Ol' Chocolate Shake", cat:"Cold Drinks", amt:"250", desc:"Classic chocolate shake bliss",                         tag:"BESTSELLER", img:"https://images.unsplash.com/photo-1559496417-e7f25cb247f3?w=320&q=80&fit=crop" },
+    { name:"Strawberry Blitz Shake", cat:"Cold Drinks", amt:"270", desc:"Fresh strawberry shake",                                  tag:"", img:"https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=320&q=80&fit=crop" },
+    { name:"Minty Oreo Shake",       cat:"Cold Drinks", amt:"270", desc:"Mint and cookies n cream shake",                           tag:"POPULAR", img:"https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=320&q=80&fit=crop" },
+    { name:"Hazelnut Brownie Shake", cat:"Cold Drinks", amt:"270", desc:"Hazelnut and fudgy brownie",                               tag:"", img:"https://images.unsplash.com/photo-1611854779393-1b2da9d400fe?w=320&q=80&fit=crop" },
+    { name:"Dreamy Caramel Shake",   cat:"Cold Drinks", amt:"270", desc:"Caramel perfection in a shake",                            tag:"", img:"https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=320&q=80&fit=crop" },
+    { name:"Nutella Shake",          cat:"Cold Drinks", amt:"280", desc:"Hazelnut chocolate shake",                                 tag:"", img:"https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=320&q=80&fit=crop" },
+    { name:"Lotus Biscoff Shake",    cat:"Cold Drinks", amt:"280", desc:"Spiced biscuit shake delight",                             tag:"NEW", img:"https://images.unsplash.com/photo-1525351484163-7529414344d8?w=320&q=80&fit=crop" },
+    { name:"Orange Cold Press Juice", cat:"Cold Drinks", amt:"180", desc:"Fresh squeezed orange juice",                            tag:"", img:"https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=320&q=80&fit=crop" },
+    { name:"Pineapple Cold Press Juice", cat:"Cold Drinks", amt:"180", desc:"Tropical pineapple juice",                            tag:"", img:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=320&q=80&fit=crop" },
+    { name:"Watermelon Cold Press Juice", cat:"Cold Drinks", amt:"180", desc:"Sweet watermelon juice",                             tag:"", img:"https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=320&q=80&fit=crop" },
+    { name:"Improve Heart Juice",    cat:"Cold Drinks", amt:"220", desc:"Healthy heart wellness blend",                            tag:"FUNCTIONAL", img:"https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=320&q=80&fit=crop" },
+    { name:"Green Cooler Juice",     cat:"Cold Drinks", amt:"220", desc:"Green detox juice blend",                                 tag:"FUNCTIONAL", img:"https://images.unsplash.com/photo-1498804103079-a6351b050096?w=320&q=80&fit=crop" },
+    { name:"Cranberry Mojito",       cat:"Cold Drinks", amt:"220", desc:"Cranberry mint refresher",                                 tag:"", img:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=320&q=80&fit=crop" },
+    { name:"Blueberry Mojito",       cat:"Cold Drinks", amt:"220", desc:"Blueberry mint cooler",                                    tag:"", img:"https://images.unsplash.com/photo-1536256263959-770b48d82b0a?w=320&q=80&fit=crop" },
+    { name:"Strawberry Mojito",      cat:"Cold Drinks", amt:"220", desc:"Strawberry mint blast",                                    tag:"", img:"https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=320&q=80&fit=crop" },
+    { name:"Peach Watermelon Mojito", cat:"Cold Drinks", amt:"220", desc:"Peachy watermelon mint",                                 tag:"POPULAR", img:"https://images.unsplash.com/photo-1541167760496-1628856ab772?w=320&q=80&fit=crop" },
+    { name:"Green Apple Mojito",     cat:"Cold Drinks", amt:"220", desc:"Green apple minty refresh",                                tag:"", img:"https://images.unsplash.com/photo-1559496417-e7f25cb247f3?w=320&q=80&fit=crop" },
+    { name:"Passion Fruit Mojito",   cat:"Cold Drinks", amt:"220", desc:"Exotic passion fruit mojito",                              tag:"", img:"https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=320&q=80&fit=crop" },
+
+    // FOOD
+    { name:"Butter Toast",           cat:"Food", amt:"100",  desc:"Simple butter on fresh toast",                                 tag:"", img:"https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=320&q=80&fit=crop" },
+    { name:"Butter Toast with Jam",  cat:"Food", amt:"150",  desc:"Toasted bread with butter and jam",                            tag:"", img:"https://images.unsplash.com/photo-1611854779393-1b2da9d400fe?w=320&q=80&fit=crop" },
+    { name:"Chilli Cheese Toast",    cat:"Food", amt:"180",  desc:"Spicy cheese on crispy toast",                                 tag:"", img:"https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=320&q=80&fit=crop" },
+    { name:"Cheese Garlic Bread",    cat:"Food", amt:"200",  desc:"Garlic and cheese bread delight",                              tag:"POPULAR", img:"https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=320&q=80&fit=crop" },
+    { name:"Classic Bruschetta",     cat:"Food", amt:"250",  desc:"Toasted bread with tomato toppings",                           tag:"", img:"https://images.unsplash.com/photo-1525351484163-7529414344d8?w=320&q=80&fit=crop" },
+    { name:"Cheesy Mushrooms on Toast", cat:"Food", amt:"250", desc:"Creamy mushrooms with cheese on toast",                      tag:"", img:"https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=320&q=80&fit=crop" },
+    { name:"Roasted Mushroom Toast", cat:"Food", amt:"280",  desc:"Earthy roasted mushrooms on toast",                            tag:"", img:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=320&q=80&fit=crop" },
+    { name:"French Fries (Salted)",  cat:"Food", amt:"210",  desc:"Crispy salted potato fries",                                   tag:"BESTSELLER", img:"https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=320&q=80&fit=crop" },
+    { name:"French Fries (Peri Peri)", cat:"Food", amt:"230", desc:"Spicy peri peri seasoned fries",                              tag:"", img:"https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=320&q=80&fit=crop" },
+    { name:"Messy Fries",            cat:"Food", amt:"230",  desc:"Loaded fries with toppings",                                   tag:"POPULAR", img:"https://images.unsplash.com/photo-1498804103079-a6351b050096?w=320&q=80&fit=crop" },
+    { name:"Paneer Makhni Fries",    cat:"Food", amt:"240",  desc:"Fries with paneer in creamy sauce",                            tag:"", img:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=320&q=80&fit=crop" },
+    { name:"Potato Wedges",          cat:"Food", amt:"220",  desc:"Crispy seasoned potato wedges",                                tag:"", img:"https://images.unsplash.com/photo-1536256263959-770b48d82b0a?w=320&q=80&fit=crop" },
+    { name:"Nachos with Cheese & Salsa", cat:"Food", amt:"240", desc:"Crispy nachos loaded with cheese",                          tag:"", img:"https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=320&q=80&fit=crop" },
+    { name:"Loaded Nachos",          cat:"Food", amt:"280",  desc:"Nachos with all the fixings",                                  tag:"POPULAR", img:"https://images.unsplash.com/photo-1541167760496-1628856ab772?w=320&q=80&fit=crop" },
+    { name:"Margherita Pizza",       cat:"Food", amt:"300",  desc:"Classic pizza with fresh tomato and mozzarella",               tag:"BESTSELLER", img:"https://images.unsplash.com/photo-1559496417-e7f25cb247f3?w=320&q=80&fit=crop" },
+    { name:"Veggie Wonder Pizza",    cat:"Food", amt:"350",  desc:"Vegetable loaded pizza",                                       tag:"", img:"https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=320&q=80&fit=crop" },
+    { name:"Paneer Makhni Pizza",    cat:"Food", amt:"350",  desc:"Paneer in creamy makhni sauce",                                tag:"POPULAR", img:"https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=320&q=80&fit=crop" },
+    { name:"Mushroom and Onion Pizza", cat:"Food", amt:"350", desc:"Earthy mushrooms and onions",                                  tag:"", img:"https://images.unsplash.com/photo-1611854779393-1b2da9d400fe?w=320&q=80&fit=crop" },
+    { name:"Peri Peri Broccoli Sandwich", cat:"Food", amt:"250", desc:"Spicy broccoli sandwich",                                   tag:"", img:"https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=320&q=80&fit=crop" },
+    { name:"Veggie Club Sandwich",   cat:"Food", amt:"250",  desc:"Triple layer veggie sandwich",                                 tag:"POPULAR", img:"https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=320&q=80&fit=crop" },
+    { name:"Paneer Panini",          cat:"Food", amt:"250",  desc:"Toasted paneer sandwich",                                      tag:"", img:"https://images.unsplash.com/photo-1525351484163-7529414344d8?w=320&q=80&fit=crop" },
+    { name:"Garlic Cheese Mushroom Panini", cat:"Food", amt:"250", desc:"Creamy mushroom panini",                                 tag:"", img:"https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=320&q=80&fit=crop" },
+    { name:"Spinach Mushroom Corn Panini", cat:"Food", amt:"250", desc:"Healthy panini blend",                                    tag:"FUNCTIONAL", img:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=320&q=80&fit=crop" },
+    { name:"Arrabiata Pasta",        cat:"Food", amt:"320",  desc:"Spicy tomato pasta",                                           tag:"", img:"https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=320&q=80&fit=crop" },
+    { name:"Alfredo Pasta",          cat:"Food", amt:"320",  desc:"Creamy alfredo sauce pasta",                                   tag:"POPULAR", img:"https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=320&q=80&fit=crop" },
+    { name:"Pink Blush Pasta",       cat:"Food", amt:"350",  desc:"Tomato cream pasta blend",                                     tag:"", img:"https://images.unsplash.com/photo-1498804103079-a6351b050096?w=320&q=80&fit=crop" },
+    { name:"Creamy Pesto Pasta",     cat:"Food", amt:"340",  desc:"Fresh basil pesto pasta",                                      tag:"", img:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=320&q=80&fit=crop" },
+    { name:"Makhani Pasta",          cat:"Food", amt:"340",  desc:"Butter and cream pasta",                                       tag:"BESTSELLER", img:"https://images.unsplash.com/photo-1536256263959-770b48d82b0a?w=320&q=80&fit=crop" },
+    { name:"Veggie Overload Salad",  cat:"Food", amt:"250",  desc:"Fresh vegetable salad bowl",                                   tag:"FUNCTIONAL", img:"https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=320&q=80&fit=crop" },
+    { name:"Taco Salad",             cat:"Food", amt:"250",  desc:"Mexican inspired salad",                                       tag:"", img:"https://images.unsplash.com/photo-1541167760496-1628856ab772?w=320&q=80&fit=crop" },
+    { name:"Pizza Salad",            cat:"Food", amt:"250",  desc:"Pizza flavored salad",                                         tag:"", img:"https://images.unsplash.com/photo-1559496417-e7f25cb247f3?w=320&q=80&fit=crop" },
+    { name:"Protein Overload Salad", cat:"Food", amt:"250",  desc:"High protein salad bowl",                                      tag:"FUNCTIONAL", img:"https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=320&q=80&fit=crop" },
+    { name:"Paneer Tikka Salad",     cat:"Food", amt:"250",  desc:"Indian paneer tikka salad",                                    tag:"POPULAR", img:"https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=320&q=80&fit=crop" },
+    { name:"Classic Veggie Burger",  cat:"Food", amt:"220",  desc:"Vegetable patty burger",                                       tag:"", img:"https://images.unsplash.com/photo-1611854779393-1b2da9d400fe?w=320&q=80&fit=crop" },
+    { name:"Italian Patty Burger",   cat:"Food", amt:"250",  desc:"Italian styled burger",                                        tag:"POPULAR", img:"https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=320&q=80&fit=crop" },
+    { name:"Peri Peri Paneer Burger", cat:"Food", amt:"250", desc:"Spicy paneer burger",                                          tag:"", img:"https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=320&q=80&fit=crop" },
+    { name:"Italian Rice Bowl",      cat:"Food", amt:"380",  desc:"Italian herbs and tomato rice",                                tag:"", img:"https://images.unsplash.com/photo-1525351484163-7529414344d8?w=320&q=80&fit=crop" },
+    { name:"Mexican Rice Bowl",      cat:"Food", amt:"380",  desc:"Spiced Mexican rice blend",                                    tag:"", img:"https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=320&q=80&fit=crop" },
+    { name:"Indian Rice Bowl",       cat:"Food", amt:"350",  desc:"Traditional Indian rice preparation",                          tag:"BESTSELLER", img:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=320&q=80&fit=crop" },
+
+    // DESSERTS
+    { name:"Cheese Cake",            cat:"Desserts", amt:"280", desc:"Creamy New York style cheesecake",                           tag:"POPULAR", img:"https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=320&q=80&fit=crop" },
+    { name:"Chocolate Truffle",      cat:"Desserts", amt:"200", desc:"Rich chocolate truffle bite",                                tag:"", img:"https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=320&q=80&fit=crop" },
+    { name:"Brownie with Ice-Cream", cat:"Desserts", amt:"180", desc:"Warm brownie with vanilla ice cream",                        tag:"BESTSELLER", img:"https://images.unsplash.com/photo-1498804103079-a6351b050096?w=320&q=80&fit=crop" },
+    { name:"Hot Brownie",            cat:"Desserts", amt:"130", desc:"Warm fudgy brownie",                                         tag:"", img:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=320&q=80&fit=crop" },
   ];
 
   // numeric value from amt string for totalling
@@ -97,7 +189,6 @@ function PageMenu() {
       <div style={{ padding:"128px 24px 64px", background:"linear-gradient(160deg,#1a0d06,#2d1b13)", textAlign:"center", position:"relative" }}>
         <p className="fira" style={{ fontSize:11,letterSpacing:"0.5em",color:"#00FF41",marginBottom:16 }}>// THE STACK</p>
         <h1 className="playfair" style={{ fontWeight:900,fontStyle:"italic",fontSize:"clamp(40px,6vw,64px)",color:"white",marginBottom:12 }}>Our Menu</h1>
-        <p className="fira" style={{ fontSize:12,color:"#9ca3af" }}>Carefully compiled. Obsessively refined. Priced in <INR amount="INR" />.</p>
         {/* Floating cart icon in header */}
         {totalItems > 0 && (
           <button onClick={()=>setCartOpen(true)} style={{ position:"absolute",top:28,right:28,background:"#00FF41",border:"none",borderRadius:999,padding:"10px 18px",display:"flex",alignItems:"center",gap:8,cursor:"pointer",animation:"cartBounce 0.4s ease" }}>

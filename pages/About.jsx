@@ -8,7 +8,7 @@ const SECTIONS = [
     tag: "// ORIGIN_STORY.md",
     headline: "Where Silicon\nMet the\nSteam Wand.",
     body: [
-      "ByteBrew was born in 2023 in a 2 BHK flat in Indiranagar, Bengaluru — where Arjun Sharma, a burned-out senior engineer from a unicorn startup, made filter coffee from beans his mother sent from Coorg. That cup became an obsession. His manifesto: if we can architect distributed systems with five-nines uptime, we can perfect Indian coffee.",
+      "ByteBrew was born in 2023 in a 2 BHK flat in Indiranagar, Bengaluru — where shreyans jaiswal, a burned-out senior engineer from a unicorn startup, made filter coffee from beans his mother sent from Coorg. That cup became an obsession. His manifesto: if we can architect distributed systems with five-nines uptime, we can perfect Indian coffee.",
       "Priya Nair, whose family has farmed the slopes of Madikeri for three generations, joined with estate-direct beans and decades of instinct. The first menu was a README pushed to GitHub. The first loyalty card, a QR code printed on a chai tapri receipt.",
       "ByteBrew opened not as a café but as a statement — that Indian-grown coffee, treated with the same rigour as software, could stand alongside any cup in the world.",
     ],
@@ -57,7 +57,7 @@ const SECTIONS = [
 ];
 
 const TEAM = [
-  { name:"Arjun Sharma", role:"Founder & CEO", emoji:"🧑‍💻", bio:"Ex-senior engineer at a Bengaluru unicorn. Rage-quit on-call to chase extraction ratios. Runs ByteBrew like a distributed system — resilient, observable, always up." },
+  { name:"Shreyans Jaiswal", role:"Founder & CEO", emoji:"🧑‍💻", bio:"Ex-senior engineer at a Bengaluru unicorn. Rage-quit on-call to chase extraction ratios. Runs ByteBrew like a distributed system — resilient, observable, always up." },
   { name:"Priya Nair", role:"Head Roaster & Bean Sourcer", emoji:"👩‍🌾", bio:"Third-generation Coorg estate farmer turned specialty roaster. Knows the difference between washed and natural at first sniff. The beans are her code." },
   { name:"Kavya Reddy", role:"UX Barista & Designer", emoji:"👩‍🎨", bio:"Product designer from Hyderabad who quit fintech for filter coffee. Every menu, every cup, every counter is a user flow she has wireframed and shipped." },
 ];

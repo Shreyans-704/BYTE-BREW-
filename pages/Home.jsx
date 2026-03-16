@@ -177,9 +177,9 @@ function PageHome({ navigate }) {
                   Butter-laminated croissant baked at 6AM, paired with a double shot of our house blend. The perfect boot sequence.
                 </p>
                 <div style={{ display:"flex",alignItems:"center",gap:16,marginBottom:24 }}>
-                  <span className="playfair" style={{ fontWeight:900,fontSize:40,color:"#2D1B13" }}>$6.90</span>
+                  <span className="playfair" style={{ fontWeight:900,fontSize:40,color:"#2D1B13" }}>₹90</span>
                   <div>
-                    <div className="fira" style={{ fontSize:13,textDecoration:"line-through",color:"#a8a29e" }}>$11.50</div>
+                    <div className="fira" style={{ fontSize:13,textDecoration:"line-through",color:"#a8a29e" }}>₹200</div>
                     <div className="fira" style={{ fontSize:11,fontWeight:700,color:"#c8902a" }}>Save 40%</div>
                   </div>
                 </div>

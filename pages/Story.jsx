@@ -26,7 +26,7 @@ function PageStory({ navigate }) {
           <p className="playfair" style={{ fontWeight:900,fontStyle:"italic",fontSize:"clamp(20px,2.5vw,28px)",color:"white",lineHeight:1.5,marginBottom:16 }}>
             "My amma's filter coffee never crashed. Not once. I can't say the same for any system I ever deployed on-call."
           </p>
-          <footer className="fira" style={{ fontSize:11,color:"#6b5e55" }}>— Arjun Sharma, Founder & CEO</footer>
+          <footer className="fira" style={{ fontSize:11,color:"#6b5e55" }}>— Shreyans Jaiswal, Founder & CEO</footer>
         </blockquote>
         <div style={{ textAlign:"center",marginBottom:64 }}>
           <p className="fira" style={{ fontSize:11,letterSpacing:"0.4em",color:"#00FF41",marginBottom:12 }}>// COMMIT HISTORY</p>
