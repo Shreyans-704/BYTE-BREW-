@@ -2,7 +2,7 @@
 "ByteBrew — Artisan coffee for the digital age. Single-origin beans, precision extraction, and a community built for developers and creatives. Order online or visit us in San Francisco."
 
 <img width="1131" height="865" alt="image" src="https://github.com/user-attachments/assets/3b6ad752-80a5-4d72-912d-3ef8ef82838b" />
-<img width="1074" height="635" alt="image" src="https://github.com/user-attachments/assets/3c7b1c67-6443-45d9-a6c0-0ab7d868d172" />
+<img width="1673" height="871" alt="image" src="https://github.com/user-attachments/assets/e68bd811-eb4a-4742-959f-98e4fa5813e2" />
 <img width="1117" height="816" alt="image" src="https://github.com/user-attachments/assets/a24d971e-66f3-4e42-926e-e168da7ff96b" />
 <img width="1116" height="820" alt="image" src="https://github.com/user-attachments/assets/604531fc-2e09-4afd-b9ad-b9d4235566ae" />
 <img width="1124" height="757" alt="image" src="https://github.com/user-attachments/assets/c28fcd89-2548-4a17-955e-37567b26b5cd" />
